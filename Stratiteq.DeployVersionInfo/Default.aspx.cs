@@ -14,11 +14,13 @@ namespace Stratiteq.DeployVersionInfo
         {
             var dc = new DeployController();
             var deployInfo = dc.Get();
-            VersionList.Items.Clear();
-            foreach (var info in deployInfo)
-            {                
-                VersionList.Items.Add(info.SiteName +  "\t" + info.Version.Version + "\t Byggdatum: " + info.Version.BuildTimeText);
-            }
+            VersionList.DataSource = deployInfo;
+            VersionList.DataBind();
+            //VersionList.Items.Clear();
+            //foreach (var info in deployInfo)
+            //{                
+            //    VersionList.DataSource =  .Items..Add(info.SiteName +  "\t\t Uppdaterad: " + info.UpdatedOn + "\tVer:" + info.Version.Version + "\t Byggdatum: " + info.Version.BuildTimeText);
+            //}
         }
     }
 }
