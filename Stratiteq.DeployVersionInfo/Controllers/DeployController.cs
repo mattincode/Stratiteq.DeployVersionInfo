@@ -15,7 +15,7 @@ namespace Stratiteq.DeployVersionInfo.Controllers
         {
             var versionInfoFolder = @"\\strwebapp\c$\inetpub\BITSFolder\versioninfo";
             var list = new List<DeployVersion>();
-            var filesInVersionFolder = Directory.GetFiles(versionInfoFolder);
+            var filesInVersionFolder = Directory.GetFiles(versionInfoFolder).OrderBy(x => x);
             foreach (var filename in filesInVersionFolder)
             {
                 var siteList = new List<DeployVersion>();
@@ -26,15 +26,17 @@ namespace Stratiteq.DeployVersionInfo.Controllers
                     while ((line = streamReader.ReadLine()) != null)
                     {
                         if (line.Length == 0) continue;            
-                        var lineItems = line.Split(',');                        
+                        var lineItems = line.Split(',');
                         if (lineItems.Count() > 1)
                         {
                             var changedDateString = lineItems[0].Substring(0, lineItems[0].Length - 14);
                             changedDateString = changedDateString.Replace('T', ' ');
                             changedDateString = changedDateString.Replace('.', ':');
                             var changedOn = DateTime.Parse(changedDateString);
-                            var siteName = filename.Split('\\').LastOrDefault();
-                            siteName = siteName.Split('.').FirstOrDefault();                            
+                            var siteNameText = filename.Split('\\').LastOrDefault();
+                            siteNameText = siteNameText.Split('.').FirstOrDefault();
+                            var siteNameTextParts = siteNameText.Split('_');
+                            var siteName = siteNameTextParts[0] + ' ' + siteNameTextParts[1] + ' ' + siteNameTextParts[2];
                             siteList.Add(new DeployVersion() { SiteName = siteName, UpdatedOn = changedOn, Version = new ApplicationVersion(lineItems[1]) });
                         }                        
                     }
