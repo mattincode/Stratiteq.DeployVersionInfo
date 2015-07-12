@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Http;
@@ -28,13 +29,13 @@ namespace Stratiteq.DeployVersionInfo.Controllers
                         var lineItems = line.Split(',');                        
                         if (lineItems.Count() > 1)
                         {
-                            string pattern = "yyyy-MM-dd'T'HH:mm:ss.fffffff'Z'";
-
-                            //DateTimeOffset changedOn = DateTimeOffset.ParseExact(lineItems[0], pattern, CultureInfo.InvariantCulture);
+                            var changedDateString = lineItems[0].Substring(0, lineItems[0].Length - 14);
+                            changedDateString = changedDateString.Replace('T', ' ');
+                            changedDateString = changedDateString.Replace('.', ':');
+                            var changedOn = DateTime.Parse(changedDateString);
                             var siteName = filename.Split('\\').LastOrDefault();
-                            siteName = siteName.Split('.').FirstOrDefault();
-                            var changedOn = new DateTimeOffset(DateTime.Now);
-                            siteList.Add(new DeployVersion() { SiteName = siteName, UpdatedOn = changedOn.LocalDateTime, Version = new ApplicationVersion(lineItems[1]) });
+                            siteName = siteName.Split('.').FirstOrDefault();                            
+                            siteList.Add(new DeployVersion() { SiteName = siteName, UpdatedOn = changedOn, Version = new ApplicationVersion(lineItems[1]) });
                         }                        
                     }
                     if (siteList.Any())
@@ -45,7 +46,8 @@ namespace Stratiteq.DeployVersionInfo.Controllers
             }
 
             return list;
-        }
-        
+        }        
     }
+
+
 }
