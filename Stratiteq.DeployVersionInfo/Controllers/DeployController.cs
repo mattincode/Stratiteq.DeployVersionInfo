@@ -42,7 +42,9 @@ namespace Stratiteq.DeployVersionInfo.Controllers
                     }
                     if (siteList.Any())
                     {
-                        list.Add(siteList.Last());
+                        var mainItem = siteList.Last();
+                        mainItem.Versions = siteList;
+                        list.Add(mainItem);
                     }
                 }                    
             }

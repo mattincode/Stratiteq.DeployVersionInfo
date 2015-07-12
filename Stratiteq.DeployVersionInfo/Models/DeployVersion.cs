@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Stratiteq.DeployVersionInfo.Models
@@ -13,6 +14,25 @@ namespace Stratiteq.DeployVersionInfo.Models
         public DateTime UpdatedOn { get; set; }
 
         public ApplicationVersion Version { get; set; }
+
+        public List<DeployVersion> Versions { get; set; }
+
+        public string ToolTip
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                if (Versions != null && Versions.Count > 0)
+                {
+                    
+                    foreach (var version in Versions)
+                    {
+                        sb.AppendLine(string.Format("{0} \t {1}\t{2} {3}", version.SiteName, version.UpdatedOn, version.Version.Version, version.Version.BuildTimeText));
+                    }                    
+                }
+                return sb.ToString();
+            }
+        }
     }
 
     public class ApplicationVersion

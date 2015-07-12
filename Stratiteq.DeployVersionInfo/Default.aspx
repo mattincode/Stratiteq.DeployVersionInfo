@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Stratiteq.DeployVersionInfo._Default" %>
+﻿<%@ Page Title="GSP Versioner" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Stratiteq.DeployVersionInfo._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -30,7 +30,7 @@
             <ItemTemplate>
                 <div class="row">
                   <div class="col-md-3">
-                    <asp:Label Text='<%# Eval("SiteName") %>' Font-Size="11" Runat="Server"/>    
+                    <asp:Label Text='<%# Eval("SiteName") %>' Font-Size="11" Runat="Server" ToolTip='<%# Eval("ToolTip") %>'/>    
                   </div>
                   <div class="col-md-3"> 
                     <asp:Label Text='<%# Eval("UpdatedOn") %>' Runat="Server"/>    

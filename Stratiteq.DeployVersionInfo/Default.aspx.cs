@@ -16,11 +16,6 @@ namespace Stratiteq.DeployVersionInfo
             var deployInfo = dc.Get();
             VersionList.DataSource = deployInfo;
             VersionList.DataBind();
-            //VersionList.Items.Clear();
-            //foreach (var info in deployInfo)
-            //{                
-            //    VersionList.DataSource =  .Items..Add(info.SiteName +  "\t\t Uppdaterad: " + info.UpdatedOn + "\tVer:" + info.Version.Version + "\t Byggdatum: " + info.Version.BuildTimeText);
-            //}
         }
     }
 }
